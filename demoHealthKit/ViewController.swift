@@ -11,19 +11,27 @@ import HealthKit
 
 class ViewController: UIViewController {
     
+    class FoodNutrition{
+        var energy: Double?
+        var carbohydrates: Double?
+        var protein: Double?
+        var fatTotal: Double?
+        var fiber: Double?
+    }
+    
     var healthStore = HKHealthStore()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let WriteDataTypes = dataTypesToWrite()
-        let ReadDataTypes = dataTypesToRead()
+        //let ReadDataTypes = dataTypesToRead()
         
-        if !self.authorizeHealthKit(writeDataTypes: WriteDataTypes, readDataTypes: ReadDataTypes){
+        if !self.authorizeHealthKit(writeDataTypes: WriteDataTypes, readDataTypes: nil){
             print("healthKit not authorized")
         }
         
-        self.addNutritionInfo()
+        self.addNutritionInfo(foodNutrition: nil)
         
     }
     
@@ -62,8 +70,8 @@ class ViewController: UIViewController {
         return readDataTypes
     }
     
-    func addNutritionInfo() -> Void {
-        let foodCorrelationToAdd: HKCorrelation = foodCorrelationForFoodItem()
+    func addNutritionInfo(foodNutrition: FoodNutrition?) -> Void {
+        let foodCorrelationToAdd: HKCorrelation = foodCorrelationForFoodItem(foodNutrition: nil)
         
         self.healthStore.save(foodCorrelationToAdd){
             (success, error) -> Void in
@@ -75,7 +83,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func foodCorrelationForFoodItem() -> HKCorrelation
+    func foodCorrelationForFoodItem(foodNutrition: FoodNutrition?) -> HKCorrelation
     {
         let nowDate = Date()
         
