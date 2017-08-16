@@ -38,8 +38,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
             print("healthKit not authorized")
         }
         //
-        self.submitButton.frame = CGRect(x: (self.view.frame.size.width - 50)/2, y: self.view.frame.size.height - 50, width: 50, height: 50)
-        self.submitButton.backgroundColor = UIColor.yellow
+        self.submitButton.frame = CGRect(x: (self.view.frame.size.width - 100)/2, y: self.view.frame.size.height - 100, width: 100, height: 50)
+        self.submitButton.backgroundColor = UIColor.blue
         self.submitButton.setTitle("Submit", for: .normal)
         self.submitButton.addTarget(self, action: #selector(submitData), for: .touchUpInside)
         self.view.addSubview(self.submitButton)
@@ -140,7 +140,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     func addNutritionInfo(foodNutrition: FoodNutrition?) -> Void {
-        let foodCorrelationToAdd: HKCorrelation = foodCorrelationForFoodItem(foodNutrition: nil)
+        let foodCorrelationToAdd: HKCorrelation = foodCorrelationForFoodItem(foodNutrition: foodNutrition)
         
         self.healthStore.save(foodCorrelationToAdd){
             (success, error) -> Void in
@@ -156,17 +156,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
     {
         let nowDate = Date()
         
-        let energyQuantityConsumed = HKQuantity(unit: HKUnit.largeCalorie(), doubleValue: (foodNutrition?.energy)!)
-        let CarbohydratesQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: (foodNutrition?.carbohydrates)!)
-        let ProteinQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: (foodNutrition?.protein)!)
-        let FatTotalQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: (foodNutrition?.fatTotal)!)
-        let FiberQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: (foodNutrition?.fiber)!)
+        let energyQuantityConsumed = HKQuantity(unit: HKUnit.largeCalorie(), doubleValue: foodNutrition!.energy)
+        let CarbohydratesQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: foodNutrition!.carbohydrates)
+        let ProteinQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: foodNutrition!.protein)
+        let FatTotalQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: foodNutrition!.fatTotal)
+        let FiberQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: foodNutrition!.fiber)
         
         let dietaryEnergyConsumedType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)!
         let dietaryCarbohydratesType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!
         let dietaryProteinType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!
         let dietaryFatTotalType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!
         let dietaryFiberType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFiber)!
+        
         
         let energyConsumedSample = HKQuantitySample(type: dietaryEnergyConsumedType, quantity: energyQuantityConsumed, start: nowDate, end: nowDate)
         let CarbohydratesSample = HKQuantitySample(type: dietaryCarbohydratesType, quantity: CarbohydratesQuantityConsumed, start: nowDate, end: nowDate)
@@ -183,6 +184,7 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         return foodCorrelation
     }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
