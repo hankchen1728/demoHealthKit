@@ -12,6 +12,7 @@
 		719420FC1F445CD2008AB55E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 719420FA1F445CD2008AB55E /* Main.storyboard */; };
 		719420FE1F445CD2008AB55E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 719420FD1F445CD2008AB55E /* Assets.xcassets */; };
 		719421011F445CD2008AB55E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 719420FF1F445CD2008AB55E /* LaunchScreen.storyboard */; };
+		7194210B1F445CD9008AB55E /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7194210A1F445CD9008AB55E /* HealthKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,8 @@
 		719420FD1F445CD2008AB55E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		719421001F445CD2008AB55E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		719421021F445CD2008AB55E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		719421081F445CD9008AB55E /* demoHealthKit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = demoHealthKit.entitlements; sourceTree = "<group>"; };
+		7194210A1F445CD9008AB55E /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7194210B1F445CD9008AB55E /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +44,7 @@
 			children = (
 				719420F51F445CD2008AB55E /* demoHealthKit */,
 				719420F41F445CD2008AB55E /* Products */,
+				719421091F445CD9008AB55E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,6 +59,7 @@
 		719420F51F445CD2008AB55E /* demoHealthKit */ = {
 			isa = PBXGroup;
 			children = (
+				719421081F445CD9008AB55E /* demoHealthKit.entitlements */,
 				719420F61F445CD2008AB55E /* AppDelegate.swift */,
 				719420F81F445CD2008AB55E /* ViewController.swift */,
 				719420FA1F445CD2008AB55E /* Main.storyboard */,
@@ -62,6 +68,14 @@
 				719421021F445CD2008AB55E /* Info.plist */,
 			);
 			path = demoHealthKit;
+			sourceTree = "<group>";
+		};
+		719421091F445CD9008AB55E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7194210A1F445CD9008AB55E /* HealthKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,6 +110,11 @@
 				TargetAttributes = {
 					719420F21F445CD2008AB55E = {
 						CreatedOnToolsVersion = 9.0;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -273,6 +292,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = demoHealthKit/demoHealthKit.entitlements;
 				DEVELOPMENT_TEAM = 5AWGXX98KX;
 				INFOPLIST_FILE = demoHealthKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -287,6 +307,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = demoHealthKit/demoHealthKit.entitlements;
 				DEVELOPMENT_TEAM = 5AWGXX98KX;
 				INFOPLIST_FILE = demoHealthKit/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
