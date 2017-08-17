@@ -21,6 +21,12 @@ class ViewController: UIViewController {
     
     var healthStore = HKHealthStore()
     
+    let dietaryEnergyConsumedType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)!
+    let dietaryCarbohydratesType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!
+    let dietaryProteinType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!
+    let dietaryFatTotalType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!
+    let dietaryFiberType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFiber)!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,24 +54,14 @@ class ViewController: UIViewController {
     }
     
     func dataTypesToWrite() -> Set<HKSampleType> {
-        let dietaryEnergyConsumedType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)!
-        let dietaryCarbohydratesType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!
-        let dietaryProteinType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!
-        let dietaryFatTotalType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!
-        let dietaryFiberType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFiber)!
         
-        let writeDataTypes: Set<HKSampleType> = [dietaryEnergyConsumedType,dietaryCarbohydratesType,dietaryProteinType,dietaryFatTotalType,dietaryFiberType]
+        let writeDataTypes: Set<HKSampleType> = [self.dietaryEnergyConsumedType,self.dietaryCarbohydratesType,self.dietaryProteinType,self.dietaryFatTotalType,self.dietaryFiberType]
         return writeDataTypes
     }
     /*
      func dataTypesToRead() -> Set<HKObjectType> {
-     let dietaryEnergyConsumedType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)!
-     let dietaryCarbohydratesType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!
-     let dietaryProteinType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!
-     let dietaryFatTotalType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!
-     let dietaryFiberType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFiber)!
      
-     let readDataTypes: Set<HKObjectType> = [dietaryEnergyConsumedType,dietaryCarbohydratesType,dietaryProteinType,dietaryFatTotalType,dietaryFiberType]
+     let readDataTypes: Set<HKObjectType> = [self.dietaryEnergyConsumedType,self.dietaryCarbohydratesType,self.dietaryProteinType,self.dietaryFatTotalType,self.dietaryFiberType]
      return readDataTypes
      }
      */
@@ -86,23 +82,17 @@ class ViewController: UIViewController {
     {
         let nowDate = Date()
         
-        let energyQuantityConsumed = HKQuantity(unit: HKUnit.largeCalorie(), doubleValue: (foodNutrition!.energy))
+        let energyQuantityConsumed = HKQuantity(unit: HKUnit.kilocalorie(), doubleValue: (foodNutrition!.energy))
         let CarbohydratesQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: (foodNutrition!.carbohydrates))
         let ProteinQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: (foodNutrition!.protein))
         let FatTotalQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: (foodNutrition!.fatTotal))
         let FiberQuantityConsumed = HKQuantity(unit: HKUnit.gram(), doubleValue: (foodNutrition!.fiber))
         
-        let dietaryEnergyConsumedType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryEnergyConsumed)!
-        let dietaryCarbohydratesType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryCarbohydrates)!
-        let dietaryProteinType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryProtein)!
-        let dietaryFatTotalType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFatTotal)!
-        let dietaryFiberType = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.dietaryFiber)!
-        
-        let energyConsumedSample = HKQuantitySample(type: dietaryEnergyConsumedType, quantity: energyQuantityConsumed, start: nowDate, end: nowDate)
-        let CarbohydratesSample = HKQuantitySample(type: dietaryCarbohydratesType, quantity: CarbohydratesQuantityConsumed, start: nowDate, end: nowDate)
-        let ProteinSample = HKQuantitySample(type: dietaryProteinType, quantity: ProteinQuantityConsumed, start: nowDate, end: nowDate)
-        let FatTotalSample = HKQuantitySample(type: dietaryFatTotalType, quantity: FatTotalQuantityConsumed, start: nowDate, end: nowDate)
-        let FiberSample = HKQuantitySample(type: dietaryFiberType, quantity: FiberQuantityConsumed, start: nowDate, end: nowDate)
+        let energyConsumedSample = HKQuantitySample(type: self.dietaryEnergyConsumedType, quantity: energyQuantityConsumed, start: nowDate, end: nowDate)
+        let CarbohydratesSample = HKQuantitySample(type: self.dietaryCarbohydratesType, quantity: CarbohydratesQuantityConsumed, start: nowDate, end: nowDate)
+        let ProteinSample = HKQuantitySample(type: self.dietaryProteinType, quantity: ProteinQuantityConsumed, start: nowDate, end: nowDate)
+        let FatTotalSample = HKQuantitySample(type: self.dietaryFatTotalType, quantity: FatTotalQuantityConsumed, start: nowDate, end: nowDate)
+        let FiberSample = HKQuantitySample(type: self.dietaryFiberType, quantity: FiberQuantityConsumed, start: nowDate, end: nowDate)
         
         let NutritionSamples: Set<HKSample> = [energyConsumedSample,CarbohydratesSample,ProteinSample,FatTotalSample,FiberSample]
         
